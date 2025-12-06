@@ -188,7 +188,18 @@ def get_sources_contribution():
 # =======================================================
 # 4. ENDPOINTS DE GESTIÓN Y CONSULTA HISTÓRICA
 # =======================================================
+# AirViewer/backend/app.py (Añadir debajo de la sección de ENDPOINTS)
 
+@app.route('/', methods=['GET'])
+@app.route('/api/v1', methods=['GET'])
+def index():
+    """Ruta de prueba para verificar que el servidor está activo."""
+    return jsonify({
+        "status": "AirViewer API is RUNNING",
+        "api_version": "v1",
+        "message": "The system is ready. Use /api/v1/data/current to fetch data."
+    }), 200
+    
 @app.route('/api/v1/thesis/indicators', methods=['GET'])
 def get_thesis_indicators():
     """Retorna los resultados simulados de los 4 indicadores operacionales de la tesis."""
@@ -281,4 +292,5 @@ if __name__ == '__main__':
         initialize_ml_components()
         
     print("--- Servidor AirViewer Flask iniciado en http://localhost:5000 ---")
+
     app.run(debug=True, port=5000)
