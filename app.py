@@ -25,7 +25,7 @@ DB_RECORDS = [
 NEXT_ID = 4 # Variable para asignar el próximo ID
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # AirViewer/backend/app.py (Añadir cerca de DB_RECORDS)
 import requests # Necesario para hacer solicitudes HTTP
@@ -294,3 +294,4 @@ if __name__ == '__main__':
     print("--- Servidor AirViewer Flask iniciado en http://localhost:5000 ---")
 
     app.run(debug=True, port=5000)
+
