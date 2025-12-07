@@ -16,6 +16,25 @@ HOURS = int((END_DATE - START_DATE).total_seconds() / 3600)
 LATITUD = -8.1098
 LONGITUD = -79.0238
 
+ESTACIONES = [
+    {'name': 'Estación Centro Histórico', 'lat': -8.1100, 'lng': -79.0238},
+    {'name': 'Estación Industrial', 'lat': -8.0850, 'lng': -79.0050},
+    {'name': 'Estación Residencial', 'lat': -8.1250, 'lng': -79.0400}
+]
+
+# Luego, en tu función de generación de datos, iteras sobre esta lista:
+def generate_simulated_data(num_hours):
+    all_data = []
+    for station in ESTACIONES:
+        # Generar datos para esta estación específica (con tendencias ligeramente diferentes)
+        # ...
+        df_station['Estacion'] = station['name']
+        df_station['Latitud'] = station['lat']
+        df_station['Longitud'] = station['lng']
+        all_data.append(df_station)
+        
+    return pd.concat(all_data)
+
 # Función placeholder para calcular AQI (ASUMIMOS que existe en ml_model.py o la definimos aquí)
 def calculate_aqi(pm25, pm10, no2, co):
     """Calcula un AQI simple basado en PM2.5 (Simulación)."""
@@ -90,3 +109,4 @@ if __name__ == '__main__':
 
     print(f"Dataset de simulación creado exitosamente en: AirViewer/backend/data/historical_data.csv")
     print(f"Dimensiones del dataset: {simulated_df.shape} ({HOURS} registros)")
+
