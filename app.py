@@ -199,14 +199,14 @@ def index():
     
 @app.route('/api/v1/thesis/indicators', methods=['GET'])
 def get_thesis_indicators():
-    """Retorna los resultados simulados de los 4 indicadores operacionales de la tesis."""
-    indicators = {
-        "TPA_Alcance_Hrs": 18.44, # Promedio Final de GE
-        "TPA_Respuesta_Seg": 2.40,  # Promedio Final de GE
-        "PPE_Precision_Pct": 245.00, # Promedio Final de GE
-        "PSC_Superacion_Pct": 48.65 # Promedio Final de GE
+    # Valores simulados que se usarán en el Front-end
+    indicators_data = {
+        "TPA_Alcance_Hrs": 18.44,       # Tiempo Promedio de Alerta (en Horas)
+        "TPA_Respuesta_Seg": 2.4,       # Tiempo Promedio de Respuesta (en Segundos)
+        "PPE_Precision_Pct": 92.5,      # % Precisión de Predicción en Zona Crítica
+        "PSC_Superacion_Pct": 48.65     # % Registros Sobre ECA (Simulación)
     }
-    return jsonify(indicators)
+    return jsonify(indicators_data)
 
 
 @app.route('/api/v1/history', methods=['GET'])
@@ -291,6 +291,7 @@ if __name__ == '__main__':
     print("--- Servidor AirViewer Flask iniciado en http://localhost:5000 ---")
 
     app.run(debug=True, port=5000)
+
 
 
 
