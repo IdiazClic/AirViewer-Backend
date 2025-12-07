@@ -49,7 +49,11 @@ FIELD_MAP = {
 # 2. LÓGICA DE CARGA DE ML
 # =======================================================
 def initialize_ml_components():
-    """Carga los artefactos ML si aún no están cargados. Intentará entrenar si no existen."""
+    """
+    Intenta cargar los artefactos ML pre-entrenados desde el disco.
+    Si falla (porque el archivo .h5 no está), imprime un error, pero el servidor
+    continúa para que las rutas de datos reales funcionen.
+    """
     global AIR_QUALITY_MODEL, AIR_QUALITY_SCALER
     
     try:
@@ -57,14 +61,10 @@ def initialize_ml_components():
         print("Modelos ML inicializados con éxito.")
     
     except Exception as e:
-        print(f"ADVERTENCIA: Falló la carga/entrenamiento de artefactos: {e}. Usando simulación de datos.")
-
-
-@app.before_request
-def check_ml_init():
-    """Ejecuta la inicialización de ML si no ha ocurrido."""
-    if AIR_QUALITY_MODEL is None:
-        initialize_ml_components()
+        # 🛑 CRÍTICO: SOLO AVISAMOS DEL ERROR, NO INTENTAMOS ENTRENAR AQUÍ.
+        print(f"ERROR: No se pudo cargar el modelo ML. Archivo faltante: {e}")
+        print("ADVERTENCIA: Las rutas de API de predicción (Prediction) fallarán.")
+        AIR_QUALITY_MODEL = None # Esto asegura que las rutas de predicción fallen de forma controlada.
 
 # =======================================================
 # 3. ENDPOINTS DE MONITOREO Y PREDICCIÓN
@@ -294,4 +294,5 @@ if __name__ == '__main__':
     print("--- Servidor AirViewer Flask iniciado en http://localhost:5000 ---")
 
     app.run(debug=True, port=5000)
+
 
