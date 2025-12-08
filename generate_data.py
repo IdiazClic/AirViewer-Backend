@@ -103,9 +103,9 @@ def generate_simulated_data(num_hours):
     
     return df
 
-// =======================================================
-// 3. FUNCIONES DE GESTIÓN Y CARGA DE TABLA
-// =======================================================
+# =======================================================
+#3. FUNCIONES DE GESTIÓN Y CARGA DE TABLA
+# =======================================================
 
 function renderHistoryTable(records) {
     historyTableBody.innerHTML = ''; // Limpia la tabla
@@ -117,20 +117,20 @@ function renderHistoryTable(records) {
     
     records.forEach(record => {
         const row = historyTableBody.insertRow();
-        // Columna 1: Fecha/Hora
+        # Columna 1: Fecha/Hora
         const dateObj = new Date(record.timestamp);
         const formattedTime = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString();
 
         row.insertCell().textContent = formattedTime;
-        // Columna 2: AQI
+        # Columna 2: AQI
         row.insertCell().textContent = record.aqi.toFixed(0);
-        // Columna 3: PM2.5
+        # Columna 3: PM2.5
         row.insertCell().textContent = record.pm25.toFixed(1);
-        // Columna 4: PM10
+        # Columna 4: PM10
         row.insertCell().textContent = record.pm10.toFixed(1);
-        // Columna 5: NO2
+        # Columna 5: NO2
         row.insertCell().textContent = record.no2.toFixed(1);
-        // Columna 6: CO
+        # Columna 6: CO
         row.insertCell().textContent = record.co.toFixed(1);
     });
 }
@@ -138,7 +138,7 @@ function renderHistoryTable(records) {
 async function fetchHistoryData(startDate = null, endDate = null) {
     let url = `${API_BASE_URL}/history`;
     
-    // Si tienes lógica de filtro por fecha en el Backend, modifícala aquí
+    # Si tienes lógica de filtro por fecha en el Backend, modifícala aquí
     if (startDate && endDate) {
         url += `?start_date=${startDate}&end_date=${endDate}`;
     }
@@ -156,7 +156,7 @@ async function fetchHistoryData(startDate = null, endDate = null) {
 }
 
 function handleSearchClick() {
-    // Implementa la lógica de filtro (por ahora, solo llama a la carga sin filtro)
+    # Implementa la lógica de filtro (por ahora, solo llama a la carga sin filtro)
     fetchHistoryData(); 
 }
 
@@ -184,7 +184,7 @@ async function addRecord() {
         if (response.ok) {
             alert('Registro añadido con éxito.');
             fetchHistoryData(); // Recarga la tabla
-            // Limpiar campos después de añadir
+            # Limpiar campos después de añadir
             document.getElementById('input-timestamp').value = '';
             document.getElementById('input-pm25').value = '';
             document.getElementById('input-pm10').value = '';
@@ -219,7 +219,7 @@ async function deleteLastRecord() {
 
 // Función de descarga (asumiendo que el Backend maneja la descarga)
 function handleDownload() {
-    // Lógica para descargar el CSV
+    # Lógica para descargar el CSV
     const url = `${API_BASE_URL}/history/download?start_date=${startDateInput.value}&end_date=${endDateInput.value}`;
     window.open(url, '_blank');
 }
@@ -239,6 +239,7 @@ if __name__ == '__main__':
 
     print(f"Dataset de simulación creado exitosamente en: AirViewer/backend/data/historical_data.csv")
     print(f"Dimensiones del dataset: {simulated_df.shape} ({HOURS} registros)")
+
 
 
 
