@@ -108,8 +108,7 @@ def generate_simulated_data(num_hours):
 # =======================================================
 
 function renderHistoryTable(records) {
-    historyTableBody.innerHTML = ''; 
-    
+
     if (records.length === 0) {
         historyTableBody.innerHTML = '<tr><td colspan="6" class="text-center">No hay registros históricos en el rango seleccionado.</td></tr>';
         return;
@@ -239,6 +238,7 @@ if __name__ == '__main__':
 
     print(f"Dataset de simulación creado exitosamente en: AirViewer/backend/data/historical_data.csv")
     print(f"Dimensiones del dataset: {simulated_df.shape} ({HOURS} registros)")
+
 
 
 
