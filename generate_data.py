@@ -43,7 +43,16 @@ def calculate_aqi(pm25, pm10, no2, co):
     if pm25 > 50:
         return round(pm25 * 3) # Valor más agresivo si está alto
     return round(pm25 * 2.5) + random.randint(-5, 5)
-
+    # Calcular AQI y añadir ruido para dinamismo
+    aqi_base = int(predicted_pm25_std * 2.5) 
+    aqi_final = aqi_base + random.uniform(-2.0, 2.0) 
+    
+    predictions.append({
+        "time_h": i + 1,
+        # 🛑 CORRECCIÓN: Asegurar que el AQI sea un entero (sin milésimas)
+        "pred_aqi": int(round(aqi_final)), 
+        "pred_pm25": round(predicted_pm25_std, 2)
+    })
 
 # =======================================================
 # 2. FUNCIÓN DE GENERACIÓN PRINCIPAL (Corregida)
@@ -67,7 +76,7 @@ def generate_simulated_data(num_hours):
     PM2_5 = np.clip(PM2_5, 15, 80) 
     
     # PM10 (Generalmente relacionado con PM2.5)
-    PM10 = PM2_5 * np.random.uniform(1.5, 2.5, num_hours)
+    PM10 = PM2_5 * np.random.uniform(1.5, 1.8, num_hours)
     PM10 = np.clip(PM10, 25, 120)
     
     # NO2 y CO (Añadido y corregido para que la API tenga todos los datos)
@@ -109,4 +118,5 @@ if __name__ == '__main__':
 
     print(f"Dataset de simulación creado exitosamente en: AirViewer/backend/data/historical_data.csv")
     print(f"Dimensiones del dataset: {simulated_df.shape} ({HOURS} registros)")
+
 
